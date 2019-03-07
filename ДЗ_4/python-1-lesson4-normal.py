@@ -7,15 +7,27 @@
 # Пупкин василий - неверно указано имя, te$T@test.net - неверно указан email (спецсимвол, заглавная буква, .net), te_4_st@test.com - верно указан.
 import re
 
-name = input("Введите имя:")
-surname = input("Введите фамилию:")
-email = input("Введите E-mail")
+def test(a, pattern, text2 = " - NO", text1 = " - OK"):
+    """Принимает объект для проверки,
+     правило для проверки и текст который выведится
+     если будет ошибка. по умолчанию стоит "a - OK" и "a - NO"
+    """
+    if (re.match(pattern, a)) == None:
+        return a + text2
+    else:
+        return a + text1
+
+name = input("Введите имя(Первая буква заглавная):")
+surname = input("Введите фамилию(Первая буква зашдавная):")
+email = input("Введите E-mail(можно использовать(a-z, 0-9, '_', '@', '.'))")
 
 pattern_name = '[А-Я A-Z]{1}'
 pattern_email = '[a-z_0-9]+@[a-z0-9]+\.(ru|com|org)'
-print(re.match(pattern_name, name))
-print(re.match(pattern_name, surname))
-print(re.match(pattern_email, email))
+
+
+print(test(name, pattern_name, " - Неверно указанно имя"))
+print(test(surname, pattern_name, " - Неверно указанно фамилия"))
+print(test(email, pattern_email, " - Неверно указан email"))
 
 # Задача - 2:
 # Вам дан текст:
