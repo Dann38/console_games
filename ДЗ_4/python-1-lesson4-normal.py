@@ -9,12 +9,13 @@ import re
 
 name = input("Введите имя:")
 surname = input("Введите фамилию:")
-# email = input("Введите E-mail")
+email = input("Введите E-mail")
 
 pattern_name = '[А-Я A-Z]{1}'
+pattern_email = '[a-z_0-9]+@[a-z0-9]+\.(ru|com|org)'
 print(re.match(pattern_name, name))
 print(re.match(pattern_name, surname))
-
+print(re.match(pattern_email, email))
 
 # Задача - 2:
 # Вам дан текст:
