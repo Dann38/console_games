@@ -15,8 +15,10 @@ print(lst2)
 # Получить список фруктов, присутствующих в обоих исходных списках.
 fructs1 = ["апельсин", "банан", "арбуз", "киви", "яблоко"]
 fructs2 = ["апельсин", "банан", "груша", "яблоко"]
-common_fructs = list(set(fructs1)&set(fructs2))
+# common_fructs = list(set(fructs1)&set(fructs2))
+common_fructs = [i for i in fructs1 for n in fructs2 if i == n]
 print(common_fructs)
+
 
 # Задание-3:
 # Дан список, заполненный произвольными числами.
