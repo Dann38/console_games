@@ -6,47 +6,65 @@
 #
 # Ваша задача исправить ошибки логики, и выполнить проверки данных, которые вводит пользователь.
 # Обязательно убедитесь, что вы выполнили все проверки, попробуйте сами сломать свою программу вводя неверные данные!
-
+import re
 person1 = {'card': 4276123465440000, 'pin': 9090, 'money': 100.90}
 person2 = {'card': 4276123465440001, 'pin': 9091, 'money': 200.90}
 person3 = {'card': 4276123465440002, 'pin': 9092, 'money': 300.90}
 
 bank = [person1, person2, person3]
 
+person = {}
+card_number = 0
+pin_code = 0
+choice = 0
+count = 0
 
 
+def check_account(person):
+    return round(person['money'], 2)
 
+
+def withdraw_money(person_, money):
+    global person
+    if person_['money'] > money:
+        person_['money'] -= money
+        return 'Вы сняли {} рублей.'.format(money)
+    else:
+        return 'На вашем счету недостаточно средств!'
+
+
+def get_person_by_card(card_number):
+    for person in bank:
+        if person['card'] == card_number:
+            return person
+
+
+def is_pin_valid(person, pin_code):
+    if person['pin'] == pin_code:
+        return True
+    return False
+
+
+def process_user_choice(choice, person):
+    global count
+    if choice == 1:
+        return check_account(person)
+    elif choice == 2:
+        count = float(input('Сумма к снятию:'))
+        return withdraw_money(person, count)
 
 def start():
-    def get_person_by_card(card_number):
-        for person in bank:
-            if person['card'] == card_number:
-                return person
-
-    def is_pin_valid(person, pin_code):
-        if person['pin'] == pin_code:
-            return True
-        return False
-
-    def process_user_choice(choice, person):
-
-
-        def check_account(person):
-            return round(person['money'], 2)
-
-        def withdraw_money(person, money):
-            if person['money'] - money == 0:
-                person['money'] -= money
-                return 'Вы сняли {} рублей.'.format(money)
-            else:
-                return 'На вашем счету недостаточно средств!'
-
-        if choice == '1':
-            return check_account(person)
-        elif choice == '2':
-            count = float(input('Сумма к снятию:'))
-            return withdraw_money(person, count)
-    card_number, pin_code = input('Введите номер карты и пин код через пробел:').split()
+    global person
+    global card_number
+    global pin_code
+    global choice
+    while True:
+        info = input('Введите номер карты и пин код через пробел:')
+        if (re.match('[0-9]{12}+\ +[0-9]{4}', info)) == None:
+            print("Не коректно введена информация")
+        else:
+            break
+    card_number, pin_code =info.split()
 
     card_number = int(card_number)
     pin_code = int(pin_code)
@@ -64,5 +82,6 @@ def start():
             print(process_user_choice(choice, person))
     else:
         print('Номер карты или пин код введены не верно!')
+
 
 start()
