@@ -58,9 +58,10 @@ def start():
     global card_number
     global pin_code
     global choice
+    pattern = '^[0-9]{16}\s{1}[0-9]{4}$'
     while True:
         info = input('Введите номер карты и пин код через пробел:')
-        if (re.match('[0-9]{12}+\ +[0-9]{4}', info)) == None:
+        if (re.match(pattern, info)) == None:
             print("Не коректно введена информация")
         else:
             break
