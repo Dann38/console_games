@@ -26,6 +26,7 @@ def check_account(person):
 
 def withdraw_money(person_, money):
     global person
+
     if person_['money'] > money:
         person_['money'] -= money
         return 'Вы сняли {} рублей.'.format(money)
@@ -47,10 +48,18 @@ def is_pin_valid(person, pin_code):
 
 def process_user_choice(choice, person):
     global count
+    pattern_money = '[0-9]'
     if choice == 1:
         return check_account(person)
     elif choice == 2:
-        count = float(input('Сумма к снятию:'))
+
+        while True:
+            count = input('Сумма к снятию:')
+            if (re.match(pattern_money, count)) == None:
+                print("Не корректно введена сумма")
+            else:
+                count = float(count)
+                break
         return withdraw_money(person, count)
 
 def start():
@@ -59,6 +68,7 @@ def start():
     global pin_code
     global choice
     pattern = '^[0-9]{16}\s{1}[0-9]{4}$'
+    pattern_choice = '[1-3]{1}'
     while True:
         info = input('Введите номер карты и пин код через пробел:')
         if (re.match(pattern, info)) == None:
@@ -72,15 +82,20 @@ def start():
     person = get_person_by_card(card_number)
     if person and is_pin_valid(person, pin_code):
         while True:
-            choice = int(input('Выберите пункт:\n'
+            choice = input('Выберите пункт:\n'
                                '1. Проверить баланс\n'
                                '2. Снять деньги\n'
                                '3. Выход\n'
                                '---------------------\n'
-                               'Ваш выбор:'))
-            if choice == 3:
-                break
-            print(process_user_choice(choice, person))
+                               'Ваш выбор:')
+            if (re.match(pattern_choice, str(choice))) == None:
+                print("Не корректный запрос")
+                continue
+            else:
+                choice = int(choice)
+                if choice == 3:
+                    break
+                print(process_user_choice(choice, person))
     else:
         print('Номер карты или пин код введены не верно!')
 
