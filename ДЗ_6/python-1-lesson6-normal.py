@@ -14,6 +14,7 @@
 Я не помню когда мы писали игру, но я придумал свою, надеюсь задание выполнино верно
 """
 import random
+import re
 class Turtel:
     def __init__(self):
         self.hp = 1000
@@ -39,11 +40,14 @@ class Turtel:
 class Leonarda(Turtel):
     def __init__(self):
         Turtel.__init__(self)
-    def arm(self, player):
+        self.attacks = "1. удар рукой(урон 50hp, везенье 7\n" \
+                       "2. удар мечем(урон 100hp везенье 5\n" \
+                       "3. удар двумя мечами(урон 200hp везенье 2"
+    def attack1(self, player):
         Turtel.attack(self, self.attack_arm_hp, player, 7)
-    def sword(self, player):
+    def attack2(self, player):
         Turtel.attack(self, 100, player, 5)
-    def sword2(self, player):
+    def attack3(self, player):
         Turtel.attack(self, 200, player, 2)
 
 
@@ -55,47 +59,44 @@ class Leonarda(Turtel):
 
 # class Rafaaly(Turtel):
 
-player1 = Leonarda()
-player2 = Leonarda()
-
-print(player1.hp)
-print(player2.hp)
-print(player1.hp)
-print(player2.hp)
-
-def character(int_, player):
-    if int_ = 1:
-        player = Leonarda()
-    elif int_ = 2:
-        player = Donatella()
-    elif int_ = 3:
-        player = Micilangelo()
-    elif int_ = 4:
-        player = Rafaaly()
+def character(int_):
+    if int_ == 1:
+        return Leonarda()
+    elif int_ == 2:
+        return Donatella()
+    elif int_ == 3:
+        return Micilangelo()
+    elif int_ == 4:
+        return Rafaaly()
 
 
 
 def start():
     print("ИГРА: БОЙ ЧЕРЕПАШЕК НИНДЗЯ")
-    player1 = input("ВЫБИРИТЕ ПЕРСОНАЖА:\n"
+    while True:
+        player1_answer = input("ВЫБИРИТЕ ПЕРСОНАЖА:\n"
                         "1. Леонарда\n"
                         "2. Донотелла\n"
                         "3. Микилянджело\n"
                         "4. Рафаэль\n"
                         )
-    player1 = int(player1)
-    character(player1, player1)
+        if re.match('^[1-4]{1}&', player1_answer) != None:
+            player1_answer = int(player1_answer)
+            break
 
+    while True:
+        player2_answer = input("ВЫБИРИТЕ ПЕРСОНАЖА:\n"
+                            "1. Леонарда\n"
+                            "2. Донотелла\n"
+                            "3. Микилянджело\n"
+                            "4. Рафаэль\n"
+                            )
+        if re.match('^[1-4]{1}$', player2_answer) != None:
+            player2_answer = int(player2_answer)
+            break
 
-    player2 = input("ВЫБИРИТЕ ПЕРСОНАЖА:\n"
-                        "1. Леонарда\n"
-                        "2. Донотелла\n"
-                        "3. Микилянджело\n"
-                        "4. Рафаэль\n"
-                        )
-    player2 = int(player1)
-    character(player1, player1)
-
+    player2 = character(player2_answer)
+    player1 = character(player1_answer)
 
 
 start()
