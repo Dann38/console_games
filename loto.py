@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+
 
 """
 == Лото ==
@@ -57,3 +57,61 @@
 модуль random: http://docs.python.org/3/library/random.html
 
 """
+
+
+
+
+
+
+
+
+import random
+
+class Cart:
+    def __init__(self, name):
+        self.name = name
+
+
+    def num_cart(self):
+        print(f"========={self.name}==========")
+        str1 = []
+        for i in range(15):
+            a = 1
+            while True:
+                num = random.randint(1, 90)
+                for j in str1:
+                    if j == num:
+                        a = 0
+                        continue
+                if a == 0:
+                    a = 1
+                    continue
+                break
+            str1.append(num)
+        str1.sort()
+
+        for i in range(len(str1)):
+            str1[i] = str(str1[i])
+
+        third = int(len(str1)/3)
+
+        str3 = str1[:third]
+        str2 = str1[third:third*2]
+        str1 = str1[third*2:]
+
+        for i in range(5):
+            str1.insert(random.randint(0, len(str1)), "  ")
+        for i in range(5):
+            str2.insert(random.randint(0, len(str1)), "  ")
+        for i in range(5):
+            str3.insert(random.randint(0, len(str1)), "  ")
+
+
+        print(str3)
+        print(str2)
+        print(str1)
+        print(f"========={'='*len(self.name)}==========")
+
+
+c = Cart("DANIIL")
+c.num_cart()
