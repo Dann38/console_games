@@ -71,6 +71,7 @@ class Cart:
     def __init__(self, name):
         self.name = name
         self.str1, self.str2, self.str3, self.str4 = num_cart()
+        self.number = self.str1.copy()
     def print_cart(self):
         print(f"============={self.name}=============")
 
@@ -118,6 +119,11 @@ def num_cart():
 
     return str1, str2, str3, str4
 
+def replacement(list, object, value):
+    num = list.index(object)
+    list.remove(object)
+    list.insert(num, value)
+
 def start():
     print("""
 == Лото ==
@@ -160,9 +166,60 @@ def start():
   
     """)
 
-    you = Cart("DANIIL")
-    you.print_cart()
+    you = Cart(input("Введите ваше имя:"))
     comp = Cart("Компьютер")
-    comp.print_cart()
-    b
+
+    barrels = [str(i) for i in range(1, 91)]
+    while True:
+        if len(you.number) == 0:
+            print("Поздравляю, вы выйграли")
+            break
+        elif len(comp.number) == 0:
+            print("Вы проиграли!")
+            break
+        you.print_cart()
+        comp.print_cart()
+        a = barrels.pop(random.randint(0, len(barrels)-1))
+        print(f"{a} (осталось {len(barrels)})")
+        answer = input("Зачеркнуть цифру? (y/n)")
+
+        if answer == "n":
+            if a in you.str1:
+                print("Вы проиграли!")
+                break
+        elif answer == "y":
+            try:
+                if len(a) == 1:
+                    a +=' '
+
+                num = you.str1.index(a)+1
+                if num <= 5:
+                    replacement(you.str2, a, "X ")
+                elif num <= 10:
+                    replacement(you.str3, a, "X ")
+                elif num <= 15:
+                    replacement(you.str4, a, "X ")
+            except ValueError:
+                print("Вы проиграли!")
+                break
+
+
+        if a in comp.str1:
+            num = comp.str1.index(a) + 1
+            if num <= 5:
+                replacement(comp.str2, a, "X ")
+            elif num <= 10:
+                replacement(comp.str3, a, "X ")
+            else:
+                replacement(comp.str4, a, "X ")
+
+
+
+
+
+
+
+
+
+
 start()
